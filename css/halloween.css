@@ -1,0 +1,215 @@
+#wrapper1
+{
+    display:flex;
+    border: 1px solid black;
+    background-image: url('/img/itemshopbackground.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 10vh;
+    padding: 5px;
+    gap: 15px;
+}
+
+#wrapper2
+{
+    display:flex;
+    border: 1px solid black;
+    background-image: url('/img/itemshopbackground.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 86vh;
+}
+
+#header1
+{
+    order:1;
+    border: solid 1px black;
+    width: 9%;
+    background-image: url('/img/csgorolllogo.png');
+    background-size:100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#header2
+{
+    order:2;
+    border: solid 1px black;
+    width: 4%;    
+    padding-top: 40px;
+    padding-left: 5px;
+    font-size: small;
+}
+
+#header3
+{
+    order:3;
+    border: solid 1px black;
+    width: 4%;
+    padding-top: 40px;
+    padding-left: 5px;
+    font-size: small;
+}
+
+#header4
+{
+    order:4;
+    border: solid 1px black;
+    width: 4%;
+    padding-top: 40px;
+    padding-left: 25px;
+}
+
+#header5
+{
+    order:5;
+    border: solid 1px black;
+    width: 5%;
+    padding-top: 40px;
+    padding-left: 4px;
+    font-size: x-small;
+}
+
+#header6
+{
+    order:6;
+    border: solid 1px black;
+    width: 4%;
+    padding-top: 40px;
+    padding-left: 3px;
+    font-size: x-small;
+}
+
+#space{
+    order:7;
+    width: 39%;
+}
+
+#header7
+{
+    order:8;
+    border: solid 1px black;
+    width: 5%;
+    font-size: 70%;
+    padding-top: 20px;
+}
+
+#header8
+{
+    order:9;
+    border: solid 1px black;
+    width: 10%;
+    font-size: 70%;
+    padding-top: 20px;
+    padding-left: 15px;
+}
+
+/* */
+/* */
+/* */
+/* */
+/* */
+
+#section1
+{
+    order:1;
+    border: solid 1px black;
+    width: 16%;
+    text-align: center;
+    padding-top: 78vh;
+}
+
+#section2
+{
+    order:2;
+    border: solid 1px black;
+    width: 5.5%;
+}
+
+#section3
+{
+    order:3;
+    border: solid 1px black;
+    width: 16%;
+    text-align: center;
+    padding-top: 60vh;
+}
+
+#section4
+{
+    order:4;
+    border: solid 1px black;
+    width: 2.5%;
+}
+
+#section5
+{
+    order:5;
+    border: solid 1px black;
+    width: 16%;
+    text-align: center;
+    padding-top: 60vh;
+}
+
+#section6
+{
+    order:6;
+    border: solid 1px black;
+    width: 2.5%;
+}
+
+#section7
+{
+    order:7;
+    border: solid 1px black;
+    width: 16%;
+    text-align: center;
+    padding-top: 60vh;
+}
+
+#section8
+{
+    order:7;
+    border: solid 1px black;
+    width: 2.5%;
+}
+
+#section9
+{
+    order:7;
+    border: solid 1px black;
+    width: 16%;
+    text-align: center;
+    padding-top: 60vh;
+}
+
+#bettext
+{
+    color: white;
+    text-align: center;
+    display: inline-block;
+    padding-left: 53px;
+    padding-right: 53px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid white;
+    border-radius: 8px;
+}
+
+#text
+{
+    text-align: center;    
+    font-size: small;
+    color: white;
+    border: 1px solid rgb(46, 44, 44);
+    display: inline-block;
+    margin: 15px 40px;
+}
+
+#chat
+{
+    color: white;
+    text-align: center;
+}
