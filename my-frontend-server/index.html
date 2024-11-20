@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Titillium+Web"
+      rel="stylesheet"
+    />
+    <link href="styles.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        let socket;
+
+        const initSocket = () => {
+          socket = new WebSocket("ws://localhost:8080");
+          socket.addEventListener("message", (event) => {
+            const parsedEvent = JSON.parse(event.data);
+            console.log(parsedEvent);
+            if(parsedEvent.event === "INIT"){
+              console.log("INIT EVENT RECEIVED");
+              $("#coins-amount").text(`Coins: ${parsedEvent.coins}`);
+            }
+            else if(parsedEvent.event === "WIN"){
+              console.log("WE WON");
+              console.log(parsedEvent.totalCoins);
+              setTimeout(() => {
+                $("#coins-amount").text(`Coins: ${parsedEvent.totalCoins}`);
+              }, 6000);
+            }
+            else if(parsedEvent.event === "BROADCAST_ROLL"){
+              const num = parseInt(parsedEvent.number);
+              spinWheel(num);
+            }
+            else if(parsedEvent.event === "SUBTRACT_COINS"){
+              $("#coins-amount").text(`Coins: ${parsedEvent.totalCoins}`);
+            }
+          });
+        };
+
+        initWheel();
+        initSocket();
+
+        $("#bet-red").on("click", function () {
+          const betAmount = parseInt($("#bet-amount").val());
+          if (isNaN(betAmount)) return;
+          console.log(betAmount + " on red");
+          socket.send(JSON.stringify({ betAmount, color: "RED" }));
+        });
+        $("#bet-green").on("click", function () {
+          const betAmount = parseInt($("#bet-amount").val());
+          if (isNaN(betAmount)) return;
+          console.log(betAmount + " on green");
+          socket.send(JSON.stringify({ betAmount, color: "GREEN" }));
+        });
+        $("#bet-black").on("click", function () {
+          const betAmount = parseInt($("#bet-amount").val());
+          if (isNaN(betAmount)) return;
+          console.log(betAmount + " on black");
+          socket.send(JSON.stringify({ betAmount, color: "BLACK" }));
+        });
+      });
+
+      function initWheel() {
+        var $wheel = $(".roulette-wrapper .wheel"),
+            row = "";
+
+        const numberOrder = [0, 1, 24, 2, 23, 3, 22, 4, 21, 5, 20, 6, 19, 7, 18, 8, 17, 9, 16, 10, 15, 11, 14, 12, 13];
+
+        row += "<div class='row'>";
+        numberOrder.forEach(number => {
+          if (number === 0) {
+            row += `<div class='card green'>${number}</div>`;
+          } else if (number <= 12) {
+            row += `<div class='card red'>${number}</div>`;
+          } else {
+            row += `<div class='card black'>${number}</div>`;
+          }
+        });
+        row += "</div>";
+
+        for (var x = 0; x < 29; x++) {
+          $wheel.append(row);
+        }
+
+        // Set initial position to center 0 (green)
+        var initialPosition = numberOrder.indexOf(0);
+        var cardWidth = 75 + 3 * 2; // width of each card including margin
+        var wheelWidth = $wheel.width();
+        var offset = (wheelWidth / 2) - (cardWidth / 2);
+        var initialOffset = offset - (initialPosition * cardWidth);
+
+        $wheel.css('transform', 'translate3d(' + initialOffset + 'px, 0px, 0px)');
+      }
+
+      function spinWheel(roll) {
+        var $wheel = $(".roulette-wrapper .wheel"),
+            order = [0, 1, 24, 2, 23, 3, 22, 4, 21, 5, 20, 6, 19, 7, 18, 8, 17, 9, 16, 10, 15, 11, 14, 12, 13],
+            position = order.indexOf(roll);
+
+        var rows = 12,
+            card = 75 + 3 * 2,
+            landingPosition = rows * 25 * card + position * card;
+
+        var randomize = Math.floor(Math.random() * 75) - 75 / 2;
+
+        landingPosition = landingPosition + randomize;
+
+        var object = {
+          x: Math.floor(Math.random() * 50) / 100,
+          y: Math.floor(Math.random() * 20) / 100,
+        };
+
+        $wheel.css({
+          "transition-timing-function":
+            "cubic-bezier(0," + object.x + "," + object.y + ",1)",
+          "transition-duration": "6s",
+          transform: "translate3d(-" + landingPosition + "px, 0px, 0px)",
+        });
+
+        setTimeout(function () {
+          $wheel.css({
+            "transition-timing-function": "",
+            "transition-duration": "",
+          });
+
+          var resetTo = -(position * card + randomize);
+          $wheel.css("transform", "translate3d(" + resetTo + 'px, 0px, 0px)');
+        }, 6 * 1000);
+      }
+    </script>
+  </head>
+  <body>
+    <div class="roulette-wrapper">
+      <div class="selector"></div>
+      <div class="wheel"></div>
+    </div>
+
+    <div class="bet-area">
+      <table>
+        <tr>
+          <th id="coins-amount" class="coin-counter">Coins: 0</th>
+          <th colspan="2">
+            <input id="bet-amount" type="text" placeholder="Enter bet amount" />
+          </th>
+        </tr>
+        <tr>
+          <td id="bet-red" class="button-cell"><button class="red">Place Bet</button></td>
+          <td id="bet-green" class="button-cell"><button class="green">Place Bet</button></td>
+          <td id="bet-black" class="button-cell"><button class="black">Place Bet</button></td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
